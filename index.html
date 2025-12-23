@@ -3524,7 +3524,7 @@ function typeText(element, text, speed = 18) {
 async function sendMessage(userText) {
   addUserMessage(userText);
 
-  const res = await fetch("https://backend-fi6i.onrender.com", {
+  const res = await fetch("https://backend-1-2sem.onrender.com", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     body: JSON.stringify({ message: userText })
@@ -3543,3 +3543,4 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
