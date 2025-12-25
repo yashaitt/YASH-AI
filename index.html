@@ -304,37 +304,40 @@
     transform: scale(0.92); 
     transition: all 0.1s ease-out; 
 }
+/* INITIAL STATE - HIDE EVERYTHING EXCEPT INTRO */
+body {
+    margin: 0;
+    background: #0f172a;
+    font-family: 'Poppins', sans-serif;
+    color: #e3b0b0;
+    min-height: 100vh;
+    padding: 0;
+    overflow: hidden;
+}
 
-        body {
-            margin: 0;
-            background: #0f172a;
-            font-family: 'Poppins';
-            color: rgb(227, 176, 176);
-            min-height: 100vh;
-            padding: 0;
-        }
+/* Hide main app initially */
+.app {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
 
-        .app {
-            width: 100%;
-            max-width: 450px;
-            height: 100vh;
-            background: #0c111b;
-            border-radius: 0;
-            overflow: hidden;
-            display: flex;
-            flex-direction: column;
-            position: relative;
-            opacity: 0;
-            visibility: hidden;
-            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-        }
+.app.visible {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+}
 
-        .app.visible { opacity: 1; visibility: visible; }
+/* Hide tutorial initially */
+#tutorialPage {
+    display: none;
+    opacity: 0;
+}
 
-        @media (min-width: 451px) {
-            body { display: flex; justify-content: center; align-items: center; }
-            .app { height: 95vh; border-radius: 22px; }
-        }
+#tutorialPage.active {
+    display: flex;
+    opacity: 1;
+}
 
         /* --- CHAT HEADER STYLES --- */
         .header {
@@ -897,10 +900,15 @@
     height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
     z-index: 9999;
-    display: none;
-    align-items: flex-start;  /* ❌ THIS IS THE PROBLEM */
+    display: none;  /* Hidden by default */
+    align-items: center;  /* ✅ FIXED - Center content */
     justify-content: center;
     padding: 20px;
+    opacity: 0;
+    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+    overflow-y: auto;
+    overflow-x: hidden;
+}
 
 .tutorial-container {
     background: rgba(12, 17, 27, 0.95);
@@ -913,6 +921,7 @@
     max-height: 90vh;  /* ✅ ADD THIS */
     overflow-y: auto;  /* ✅ ADD THIS */
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    position: relative;
 }
 
 @keyframes tutorialSlideIn {
@@ -951,9 +960,20 @@
 }
 
 .tutorial-subtitle {
-    color: rgba(255, 255, 255, 0.9);  /* ✅ FIXED - More visible */
+    color: rgba(255, 255, 255, 0.9);  /* ✅ More visible */
     font-size: 14px;
     letter-spacing: 2px;
+}
+
+.demo-instruction {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    color: #ffffff;  /* ✅ Fully visible */
+    font-size: 14px;
+    font-weight: 600;
+    text-align: center;
 }
 
 /* Interactive Demo Section */
@@ -2920,23 +2940,94 @@ function speak(text) {
 /* =========================
    Main DOMContentLoaded wiring
    ========================= */
+// ============================================
+// INTRO & TUTORIAL FLOW - FIXED
+// ============================================
+
 document.addEventListener("DOMContentLoaded", function () {
   const introScreen = document.getElementById("introScreen");
   const mainApp = document.getElementById("mainApp");
   const tutorialPage = document.getElementById("tutorialPage");
-  const startChatBtn = document.getElementById("startChatBtn");
-  const chat = document.getElementById("chat");
-  const header = document.querySelector(".header");
-  const input = document.getElementById("input");
-  const send = document.getElementById("send");
-  const file = document.getElementById("file");
-  const micButton = document.getElementById("micButton");
-  const fileButton = document.getElementById("fileButton");
-  const multiFunctionContainer = document.getElementById("multiFunctionContainer");
-  const composer = document.getElementById("composer");
-  const stagedFileChip = document.getElementById("stagedFileChip");
-  const stagedFileName = document.getElementById("stagedFileName");
-  const clearFileBtn = document.getElementById("clearFileBtn");
+  
+  // Ensure tutorial is hidden initially
+  if (tutorialPage) {
+    tutorialPage.style.display = "none";
+    tutorialPage.style.opacity = "0";
+  }
+  
+  // Ensure main app is hidden initially
+  if (mainApp) {
+    mainApp.classList.remove("visible");
+  }
+
+  // Step 1: Hide intro after 3.5 seconds
+  setTimeout(() => {
+    if (introScreen) {
+      introScreen.classList.add("hidden");
+    }
+    
+    // Step 2: Show tutorial after intro fades
+    setTimeout(() => {
+      if (tutorialPage) {
+        tutorialPage.style.display = "flex";
+        
+        // Wait for display to apply, then fade in
+        setTimeout(() => {
+          tutorialPage.style.opacity = "1";
+          
+          // Step 3: Attach button events AFTER tutorial is visible
+          setupTutorialButtons();
+        }, 50);
+      }
+    }, 600); // Wait for intro to fade out
+  }, 3500); // Show intro for 3.5 seconds
+
+  // Tutorial button setup function
+  function setupTutorialButtons() {
+    const startBtn = document.getElementById("startChatBtn");
+    const skipBtn = document.getElementById("tutorialSkip");
+    
+    console.log("Setting up tutorial buttons...", { startBtn, skipBtn });
+    
+    if (startBtn) {
+      startBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log("Start Chatting clicked!");
+        startMainApp();
+      };
+    }
+    
+    if (skipBtn) {
+      skipBtn.onclick = function(e) {
+        e.preventDefault();
+        console.log("Skip Tutorial clicked!");
+        startMainApp();
+      };
+    }
+  }
+  
+  // Function to transition to main app
+  function startMainApp() {
+    if (tutorialPage) {
+      tutorialPage.style.opacity = "0";
+      
+      setTimeout(() => {
+        tutorialPage.style.display = "none";
+        
+        if (mainApp) {
+          mainApp.classList.add("visible");
+          
+          // Add welcome message
+          setTimeout(() => {
+            addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+          }, 300);
+        }
+      }, 300);
+    }
+  }
+
+  // Continue with rest of your DOMContentLoaded code below...
+  // (Keep all the other code for chat, file upload, hamburger menu, etc.)
 
   // Hamburger menu elements
   const hamburgerMenu = document.getElementById("hamburgerMenu");
@@ -3502,6 +3593,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
