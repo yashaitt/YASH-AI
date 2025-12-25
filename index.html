@@ -3492,7 +3492,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
 <script>
 
+<script>
+// Character-by-character typing helper
+function typeText(element, text, speed = 18) {
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i++);
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
 
+// Wrap finishTypingBubble to add typing effect safely
+(function () {
+  if (typeof window.finishTypingBubble !== "function") return;
+  const _finish = window.finishTypingBubble;
+  window.finishTypingBubble = function(finalText, speakFlag) {
+    try {
+      const bubble = document.getElementById("typingBubble");
+      if (!bubble) return _finish(finalText, speakFlag);
+
+      bubble.removeAttribute("id");
+      const indicator = bubble.querySelector(".typing-indicator");
+      if (indicator) indicator.remove();
+
+      const textDiv = bubble.querySelector(".message-text");
+      if (textDiv) {
+        textDiv.style.display = "block";
+        // Set the label before the final typing effect starts.
+        textDiv.innerHTML = `<b>YASH AI:</b>`;
+        typeText(textDiv, finalText);
+      } else {
+        return _finish(finalText, speakFlag);
+      }
+
+      // feedback buttons (if your app has them)
+      if (typeof window.createFeedbackButtons === "function") {
+        const fb = window.createFeedbackButtons(bubble);
+        if (fb) bubble.appendChild(fb);
+      }
+
+      // speak AFTER typing finishes
+      if (speakFlag && typeof window.speak === "function") {
+        setTimeout(() => window.speak(finalText), finalText.length * 18 + 300);
+      }
+    } catch (e) {
+      // fallback to original behavior on any error
+      return _finish(finalText, speakFlag);
+    }
+  };
+})();
+
+async function sendMessage(userText) {
+  addUserMessage(userText);
+
+  const res = await fetch("https://backend-1-2sem.onrender.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: userText })
+  });
+
+  const data = await res.json();
+  addAIMessage(data.reply);
+}
 
 console.log('%c🚀 YASH AI Loaded Successfully!', 'color: #00ffff; font-size: 16px; font-weight: bold;');
 console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-size: 12px;');
