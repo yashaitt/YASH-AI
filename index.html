@@ -897,11 +897,11 @@
     height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
     z-index: 9999;
-    display: none;
+    display: flex;
     align-items: flex-start;
     justify-content: center;
     padding: 20px;
-    opacity: 0;
+    opacity: 1;
     transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
     overflow-x: hidden;
@@ -2987,19 +2987,102 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainApp = document.getElementById("mainApp");
   const tutorialPage = document.getElementById("tutorialPage");
   const startChatBtn = document.getElementById("startChatBtn");
-  const chat = document.getElementById("chat");
-  const header = document.querySelector(".header");
-  const input = document.getElementById("input");
-  const send = document.getElementById("send");
-  const file = document.getElementById("file");
-  const micButton = document.getElementById("micButton");
-  const fileButton = document.getElementById("fileButton");
-  const multiFunctionContainer = document.getElementById("multiFunctionContainer");
-  const composer = document.getElementById("composer");
-  const stagedFileChip = document.getElementById("stagedFileChip");
-  const stagedFileName = document.getElementById("stagedFileName");
-  const clearFileBtn = document.getElementById("clearFileBtn");
+  const tutorialSkip = document.getElementById("tutorialSkip");
+  
+  console.log("🚀 DOM Content Loaded");
+  console.log("Elements found:", {
+    intro: !!introScreen,
+    tutorial: !!tutorialPage,
+    mainApp: !!mainApp,
+    startBtn: !!startChatBtn,
+    skipBtn: !!tutorialSkip
+  });
 
+  // ============================================
+  // INTRO SCREEN LOGIC - FIXED
+  // ============================================
+  
+  console.log("🎬 Starting intro animation");
+  
+  setTimeout(() => {
+    console.log("⏰ 3.5s passed - hiding intro");
+    introScreen.classList.add("hidden");
+    
+    // Wait for intro fade out, then show tutorial
+    setTimeout(() => {
+      console.log("📖 Showing tutorial page");
+      
+      // Show tutorial
+      tutorialPage.style.display = "flex";
+      
+      // Force browser to recognize the display change
+      void tutorialPage.offsetWidth;
+      
+      // Fade in tutorial
+      setTimeout(() => {
+        tutorialPage.style.opacity = "1";
+        console.log("✅ Tutorial visible!");
+      }, 50);
+      
+    }, 600); // Wait for intro fade out (500ms) + small buffer
+    
+  }, 3500); // Show intro for 3.5 seconds
+
+  // ============================================
+  // START CHAT BUTTON
+  // ============================================
+  
+  if (startChatBtn) {
+    console.log("✅ Start Chat button found");
+    startChatBtn.addEventListener('click', function() {
+      console.log("🚀 Start Chat clicked");
+      
+      // Hide tutorial
+      tutorialPage.style.opacity = "0";
+      
+      setTimeout(() => {
+        tutorialPage.style.display = "none";
+        mainApp.classList.add("visible");
+        console.log("✅ Main app visible");
+        
+        // Add welcome message
+        setTimeout(() => {
+          addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+        }, 100);
+      }, 300);
+    });
+  } else {
+    console.error("❌ Start Chat button NOT found!");
+  }
+
+  // ============================================
+  // SKIP TUTORIAL BUTTON
+  // ============================================
+  
+  if (tutorialSkip) {
+    console.log("✅ Skip button found");
+    tutorialSkip.addEventListener('click', function() {
+      console.log("⏭️ Skip clicked");
+      
+      // Hide tutorial
+      tutorialPage.style.opacity = "0";
+      
+      setTimeout(() => {
+        tutorialPage.style.display = "none";
+        mainApp.classList.add("visible");
+        console.log("✅ Main app visible (skipped)");
+        
+        // Add welcome message
+        setTimeout(() => {
+          addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+        }, 100);
+      }, 300);
+    });
+  } else {
+    console.error("❌ Skip button NOT found!");
+  }
+
+ 
   // Hamburger menu elements
   const hamburgerMenu = document.getElementById("hamburgerMenu");
   const sidebarMenu = document.getElementById("sidebarMenu");
@@ -3021,22 +3104,24 @@ document.addEventListener("DOMContentLoaded", function () {
   let userUsedVoice = false;
 
   
-/* Intro logic - Always show tutorial */
-  console.log("🎬 Intro started");
+/* Intro logic - Always show tutorial - FIXED */
+console.log("🎬 Intro started");
+
+// Hide intro after 3.5 seconds
+setTimeout(() => {
+  console.log("✅ Hiding intro screen");
+  introScreen.classList.add("hidden");
+  
+  // Show tutorial page after intro hides
   setTimeout(() => {
-    console.log("✅ Hiding intro screen");
-    introScreen.classList.add("hidden");
-    
-    // Always show tutorial page
-    setTimeout(() => {
-      console.log("📖 Showing tutorial page");
-      tutorialPage.style.display = "flex";
-      setTimeout(() => { 
-        tutorialPage.style.opacity = "1"; 
-        console.log("✅ Tutorial page visible");
-      }, 50);
-    }, 600);
-  }, 3500);
+    console.log("📖 Showing tutorial page");
+    tutorialPage.style.display = "flex";
+    // Force reflow to trigger CSS transition
+    tutorialPage.offsetHeight;
+    tutorialPage.style.opacity = "1";
+    console.log("✅ Tutorial page should be visible now");
+  }, 500);
+}, 3500);
 
 // Start Chat Button (Tutorial)
   if (startChatBtn) {
@@ -3526,6 +3611,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
