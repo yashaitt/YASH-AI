@@ -897,11 +897,11 @@
     height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
     z-index: 9999;
-    display: flex;
+    display: none;
     align-items: flex-start;
     justify-content: center;
     padding: 20px;
-    opacity: 1;
+    opacity: 0;
     transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
     overflow-y: auto;
     overflow-x: hidden;
@@ -2987,80 +2987,19 @@ document.addEventListener("DOMContentLoaded", function () {
   const mainApp = document.getElementById("mainApp");
   const tutorialPage = document.getElementById("tutorialPage");
   const startChatBtn = document.getElementById("startChatBtn");
-  const tutorialSkip = document.getElementById("tutorialSkip");
-  
-  console.log("🚀 DOM Content Loaded");
+  const chat = document.getElementById("chat");
+  const header = document.querySelector(".header");
+  const input = document.getElementById("input");
+  const send = document.getElementById("send");
+  const file = document.getElementById("file");
+  const micButton = document.getElementById("micButton");
+  const fileButton = document.getElementById("fileButton");
+  const multiFunctionContainer = document.getElementById("multiFunctionContainer");
+  const composer = document.getElementById("composer");
+  const stagedFileChip = document.getElementById("stagedFileChip");
+  const stagedFileName = document.getElementById("stagedFileName");
+  const clearFileBtn = document.getElementById("clearFileBtn");
 
-  // ============================================
-  // INTRO SCREEN LOGIC - FIXED
-  // ============================================
-  
-  console.log("🎬 Starting intro animation");
-  
-  setTimeout(() => {
-    console.log("✅ Hiding intro screen");
-    introScreen.classList.add("hidden");
-    
-    // Wait for intro fade out animation (500ms from CSS)
-    setTimeout(() => {
-      console.log("📖 Showing tutorial page");
-      tutorialPage.style.display = "flex";
-      tutorialPage.style.opacity = "1";
-      console.log("✅ Tutorial page visible");
-    }, 500);
-  }, 3500);
-
-  // ============================================
-  // START CHAT BUTTON - KEEP ONLY THIS ONE
-  // ============================================
-  
-  if (startChatBtn) {
-    console.log("✅ Start Chat button found");
-    startChatBtn.onclick = function() {
-      console.log("🚀 Start Chat clicked");
-      tutorialPage.style.opacity = "0";
-      
-      setTimeout(() => {
-        tutorialPage.style.display = "none";
-        mainApp.classList.add("visible");
-        console.log("✅ Main app visible");
-        
-        setTimeout(() => {
-          addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-        }, 100);
-      }, 300);
-    };
-  } else {
-    console.error("❌ Start Chat button NOT found!");
-  }
-
-  // ============================================
-  // SKIP TUTORIAL BUTTON - KEEP ONLY THIS ONE
-  // ============================================
-  
-  if (tutorialSkip) {
-    console.log("✅ Skip button found");
-    tutorialSkip.onclick = function() {
-      console.log("⏭️ Skip clicked");
-      tutorialPage.style.opacity = "0";
-      
-      setTimeout(() => {
-        tutorialPage.style.display = "none";
-        mainApp.classList.add("visible");
-        console.log("✅ Main app visible (skipped)");
-        
-        setTimeout(() => {
-          addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-        }, 100);
-      }, 300);
-    };
-  } else {
-    console.error("❌ Skip button NOT found!");
-  }
-
-  // ... rest of your code continues here (hamburger menu, etc.)
-
- 
   // Hamburger menu elements
   const hamburgerMenu = document.getElementById("hamburgerMenu");
   const sidebarMenu = document.getElementById("sidebarMenu");
@@ -3082,57 +3021,29 @@ document.addEventListener("DOMContentLoaded", function () {
   let userUsedVoice = false;
 
   
-/* Intro logic - Always show tutorial - FIXED */
-console.log("🎬 Intro started");
-
-// Hide intro after 3.5 seconds
-setTimeout(() => {
-  console.log("✅ Hiding intro screen");
-  introScreen.classList.add("hidden");
-  
-  // Show tutorial page after intro hides
+ /* Intro logic - Always show tutorial */
   setTimeout(() => {
-    console.log("📖 Showing tutorial page");
-    tutorialPage.style.display = "flex";
-    // Force reflow to trigger CSS transition
-    tutorialPage.offsetHeight;
-    tutorialPage.style.opacity = "1";
-    console.log("✅ Tutorial page should be visible now");
-  }, 500);
-}, 3500);
+    introScreen.classList.add("hidden");
+    
+    // Always show tutorial page
+    setTimeout(() => {
+      tutorialPage.style.display = "flex";
+      setTimeout(() => { tutorialPage.style.opacity = "1"; }, 50);
+    }, 600);
+  }, 3500);
 
-// Start Chat Button (Tutorial)
+  // Start Chat Button (Tutorial)
   if (startChatBtn) {
-    console.log("✅ Start Chat button found");
     startChatBtn.onclick = function() {
-      console.log("🚀 Start Chat clicked");
+     
+      
       tutorialPage.style.opacity = "0";
       setTimeout(() => {
         tutorialPage.style.display = "none";
         mainApp.classList.add("visible");
-        console.log("✅ Main app visible");
         addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
       }, 300);
     };
-  } else {
-    console.error("❌ Start Chat button NOT found!");
-  }
-
-  // Tutorial Skip Button
-  if (tutorialSkip) {
-    console.log("✅ Skip button found");
-    tutorialSkip.onclick = function() {
-      console.log("⏭️ Skip clicked");
-      tutorialPage.style.opacity = "0";
-      setTimeout(() => {
-        tutorialPage.style.display = "none";
-        mainApp.classList.add("visible");
-        console.log("✅ Main app visible (skipped)");
-        addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-      }, 300);
-    };
-  } else {
-    console.error("❌ Skip button NOT found!");
   }
 
   // Hamburger Menu Logic
@@ -3396,25 +3307,29 @@ send.onclick = async () => {
 
     if (!text && !selectedFile) return;
 
-    // Add User Bubble and clear input
+    // 1. Add User Bubble and clear input
     addBubble("user", text, selectedFile);
     input.value = "";
     autoResizeTextarea();
     
+    // Store file reference for upload and immediately clear file UI.
     const fileToUpload = selectedFile; 
     selectedFile = null;
     file.value = "";
     stagedFileChip.style.display = "none"; 
     
-    // Check for fixed responses (only for text without file)
-    const fixedResponse = getFixedResponse(text);
-    if (fixedResponse && !fileToUpload) {
-        simulateTypingEffect(fixedResponse, userUsedVoice);
-        userUsedVoice = false;
-        return;
-    }
+    // *** CHECK FOR FIXED RESPONSES FIRST ***
+    // *** CHECK FOR FIXED RESPONSES FIRST ***
+const fixedResponse = getFixedResponse(text);
 
-    // Reset typing state
+if (fixedResponse && !fileToUpload) {
+  // If we have a fixed response and no file, show it with typing effect
+  simulateTypingEffect(fixedResponse, userUsedVoice);
+  userUsedVoice = false;
+  return; // Don't call backend
+}
+
+    // Reset typing state before starting new stream
     streamedText = ""; 
     displayIndex = 0;
     if (typingInterval) {
@@ -3422,69 +3337,43 @@ send.onclick = async () => {
         typingInterval = null;
     }
 
-    // Show Typing Indicator
-    addTypingBubble();
+    // 2. Show Typing Indicator
+    const typingBubble = addTypingBubble();
 
     try {
-        if (fileToUpload) {
-            // FILE UPLOAD
-            const fileResponse = await uploadFileToBackend(fileToUpload, text);
-            const ans = fileResponse.message || "File uploaded successfully.";
-            
-            // For file uploads, set text and finish immediately
-            streamedText = ans;
-            displayIndex = 0;
-            updateTypingBubble(ans);
-            
-            // Wait for typing to complete
-            setTimeout(() => {
-                waitForTypingToComplete(() => {
-                    finishTypingBubble(ans, userUsedVoice);
-                });
-            }, 100);
+      if (fileToUpload) {
+        // --- FILE UPLOAD PATH ---
+        const fileResponse = await uploadFileToBackend(fileToUpload, text);
+        const ans = fileResponse.message || "File uploaded and processed successfully. Please see the terminal for backend details.";
+        finishTypingBubble(ans, userUsedVoice); 
 
-        } else {
-            // TEXT STREAMING
-            await streamFromBackend(text, 
-                (chunk) => {
-                    updateTypingBubble(chunk);
-                }, 
-                () => {
-                    // Stream complete - now wait for typing to finish
-                    waitForTypingToComplete(() => {
-                        finishTypingBubble(streamedText, userUsedVoice);
-                    });
-                }
-            );
-        }
+      } else {
+        // --- TEXT STREAMING PATH ---
+        let finalResponse = "";
+        
+        await streamFromBackend(text, 
+          (chunk) => {
+            updateTypingBubble(chunk);
+          }, 
+          () => {
+            // Stream ended
+          }
+        );
+        
+        finalResponse = streamedText;
+        finishTypingBubble(finalResponse, userUsedVoice); 
+      }
     } catch (err) {
-        console.error("Chat/Upload Error:", err);
-        const errorMessage = streamedText || "Connection error. Please try again.";
-        waitForTypingToComplete(() => {
-            finishTypingBubble(errorMessage, false);
-        });
+      console.error("Chat/Upload Error:", err);
+      const errorMessage = streamedText || "Something went wrong. Please check your backend connection.";
+      finishTypingBubble(errorMessage, false);
     }
 
+    // 4. Final cleanup
     userUsedVoice = false;
-};
+  };
 
-// NEW HELPER FUNCTION - Add this right after send.onclick
-function waitForTypingToComplete(callback) {
-    const checkTyping = setInterval(() => {
-        // Check if typing is done
-        if (!typingInterval || displayIndex >= streamedText.length) {
-            clearInterval(checkTyping);
-            // Small delay to ensure last character is displayed
-            setTimeout(callback, 50);
-        }
-    }, 50);
-    
-    // Failsafe: force finish after 15 seconds
-    setTimeout(() => {
-        clearInterval(checkTyping);
-        callback();
-    }, 15000);
-}
+});
 
 // ===== INTERACTIVE TUTORIAL DEMO =====
 document.addEventListener('DOMContentLoaded', function() {
@@ -3580,6 +3469,71 @@ document.addEventListener('DOMContentLoaded', function() {
 
 
 <script>
+// Character-by-character typing helper
+function typeText(element, text, speed = 18) {
+  let i = 0;
+  function type() {
+    if (i < text.length) {
+      element.innerHTML += text.charAt(i++);
+      setTimeout(type, speed);
+    }
+  }
+  type();
+}
+
+// Wrap finishTypingBubble to add typing effect safely
+(function () {
+  if (typeof window.finishTypingBubble !== "function") return;
+  const _finish = window.finishTypingBubble;
+  window.finishTypingBubble = function(finalText, speakFlag) {
+    try {
+      const bubble = document.getElementById("typingBubble");
+      if (!bubble) return _finish(finalText, speakFlag);
+
+      bubble.removeAttribute("id");
+      const indicator = bubble.querySelector(".typing-indicator");
+      if (indicator) indicator.remove();
+
+      const textDiv = bubble.querySelector(".message-text");
+      if (textDiv) {
+        textDiv.style.display = "block";
+        // Set the label before the final typing effect starts.
+        textDiv.innerHTML = `<b>YASH AI:</b>`;
+        typeText(textDiv, finalText);
+      } else {
+        return _finish(finalText, speakFlag);
+      }
+
+      // feedback buttons (if your app has them)
+      if (typeof window.createFeedbackButtons === "function") {
+        const fb = window.createFeedbackButtons(bubble);
+        if (fb) bubble.appendChild(fb);
+      }
+
+      // speak AFTER typing finishes
+      if (speakFlag && typeof window.speak === "function") {
+        setTimeout(() => window.speak(finalText), finalText.length * 18 + 300);
+      }
+    } catch (e) {
+      // fallback to original behavior on any error
+      return _finish(finalText, speakFlag);
+    }
+  };
+})();
+
+async function sendMessage(userText) {
+  addUserMessage(userText);
+
+  const res = await fetch("https://backend-1-2sem.onrender.com", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify({ message: userText })
+  });
+
+  const data = await res.json();
+  addAIMessage(data.reply);
+}
+
 
 
 console.log('%c🚀 YASH AI Loaded Successfully!', 'color: #00ffff; font-size: 16px; font-weight: bold;');
@@ -3589,13 +3543,4 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
-
-
-
-
-
-
-
-
-
 
