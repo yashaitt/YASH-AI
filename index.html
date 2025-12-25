@@ -304,40 +304,37 @@
     transform: scale(0.92); 
     transition: all 0.1s ease-out; 
 }
-/* INITIAL STATE - HIDE EVERYTHING EXCEPT INTRO */
-body {
-    margin: 0;
-    background: #0f172a;
-    font-family: 'Poppins', sans-serif;
-    color: #e3b0b0;
-    min-height: 100vh;
-    padding: 0;
-    overflow: hidden;
-}
 
-/* Hide main app initially */
-.app {
-    opacity: 0;
-    visibility: hidden;
-    pointer-events: none;
-}
+        body {
+            margin: 0;
+            background: #0f172a;
+            font-family: 'Poppins';
+            color: rgb(227, 176, 176);
+            min-height: 100vh;
+            padding: 0;
+        }
 
-.app.visible {
-    opacity: 1;
-    visibility: visible;
-    pointer-events: auto;
-}
+        .app {
+            width: 100%;
+            max-width: 450px;
+            height: 100vh;
+            background: #0c111b;
+            border-radius: 0;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            position: relative;
+            opacity: 0;
+            visibility: hidden;
+            transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1), visibility 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
 
-/* Hide tutorial initially */
-#tutorialPage {
-    display: none;
-    opacity: 0;
-}
+        .app.visible { opacity: 1; visibility: visible; }
 
-#tutorialPage.active {
-    display: flex;
-    opacity: 1;
-}
+        @media (min-width: 451px) {
+            body { display: flex; justify-content: center; align-items: center; }
+            .app { height: 95vh; border-radius: 22px; }
+        }
 
         /* --- CHAT HEADER STYLES --- */
         .header {
@@ -900,8 +897,8 @@ body {
     height: 100%;
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
     z-index: 9999;
-    display: none;  /* Hidden by default */
-    align-items: center;  /* ✅ FIXED - Center content */
+    display: none;
+    align-items: flex-start;
     justify-content: center;
     padding: 20px;
     opacity: 0;
@@ -918,9 +915,8 @@ body {
     padding: 40px 30px;
     max-width: 480px;
     width: 95%;
-    max-height: 90vh;  /* ✅ ADD THIS */
-    overflow-y: auto;  /* ✅ ADD THIS */
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
+    animation: tutorialSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
     position: relative;
 }
 
@@ -960,20 +956,9 @@ body {
 }
 
 .tutorial-subtitle {
-    color: rgba(255, 255, 255, 0.9);  /* ✅ More visible */
+    color: rgba(255, 255, 255, 0.6);
     font-size: 14px;
     letter-spacing: 2px;
-}
-
-.demo-instruction {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 10px;
-    color: #ffffff;  /* ✅ Fully visible */
-    font-size: 14px;
-    font-weight: 600;
-    text-align: center;
 }
 
 /* Interactive Demo Section */
@@ -1073,7 +1058,7 @@ body {
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    color: rgba(255, 255, 255, 1);
+    color: rgba(255, 255, 255, 0.7);
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -1880,41 +1865,98 @@ button:active {
     </div>
 </div>
 
+<!-- Tutorial/Guide Page -->
+<div id="tutorialPage" style="display:none;">
+    <div class="tutorial-container">
+        <!-- Header -->
+        <div class="tutorial-header">
+            
+            <h2 class="tutorial-title">QUICK GUIDE</h2>
+            <p class="tutorial-subtitle">Master YASH AI in seconds</p>
+        </div>
 
+        <!-- Interactive Demo Section -->
+        <div class="tutorial-demo-section">
+            <div class="demo-label">TRY IT NOW</div>
+            <div class="interactive-demo">
+                <div class="demo-buttons-container" id="demoButtonsContainer">
+                    <button class="demo-file-btn active" id="demoFileBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                            <polyline points="14 2 14 8 20 8"></polyline>
+                        </svg>
+                    </button>
+                    <button class="demo-mic-btn" id="demoMicBtn">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
+                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                            <line x1="12" y1="19" x2="12" y2="23"></line>
+                            <line x1="8" y1="23" x2="16" y2="23"></line>
+                        </svg>
+                    </button>
+                </div>
+                <div class="demo-instruction" id="demoInstruction">
+                    <div class="swipe-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </div>
+                    <span>Swipe UP or DOWN on the button</span>
+                </div>
+            </div>
+        </div>
 
         <!-- Features List -->
-      <!-- Tutorial Demo Section with FIXED arrows -->
-<div class="tutorial-demo-section">
-    <div class="demo-label">TRY IT NOW</div>
-    <div class="interactive-demo">
-        <div class="demo-buttons-container" id="demoButtonsContainer">
-            <button class="demo-file-btn active" id="demoFileBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                    <polyline points="14 2 14 8 20 8"></polyline>
-                </svg>
-            </button>
-            <button class="demo-mic-btn" id="demoMicBtn">
-                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
-                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                    <line x1="12" y1="19" x2="12" y2="23"></line>
-                    <line x1="8" y1="23" x2="16" y2="23"></line>
-                </svg>
-            </button>
-        </div>
-        <div class="demo-instruction" id="demoInstruction">
-            <!-- INITIAL STATE: Show UP arrow -->
-            <div class="swipe-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <!-- UP ARROW -->
-                    <path d="M12 19V5M5 12l7-7 7 7"/>
-                </svg>
-            </div>
-            <span>Swipe UP to switch to Voice</span>
-        </div>
+        <div class="tutorial-features">
+            <div class="tutorial-feature-item">
+    <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 19V5M5 12l7-7 7 7"/>
+        </svg>
+    </div>
+    <div class="feature-content">
+        <div class="feature-title">Slide UP</div>
+        <div class="feature-desc">File button → Voice button</div>
     </div>
 </div>
+
+           <div class="tutorial-feature-item">
+    <div class="feature-icon" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <path d="M12 5v14M5 12l7 7 7-7"/>
+        </svg>
+    </div>
+    <div class="feature-content">
+        <div class="feature-title">Slide DOWN</div>
+        <div class="feature-desc">Voice button → File button</div>
+    </div>
+</div>
+            <div class="tutorial-feature-item">
+                <div class="feature-icon" style="background: rgba(34, 197, 94, 0.15); color: #22c55e;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    </svg>
+                </div>
+                <div class="feature-content">
+                    <div class="feature-title">Voice Input</div>
+                    <div class="feature-desc">Speak your questions naturally</div>
+                </div>
+            </div>
+
+            <div class="tutorial-feature-item">
+                <div class="feature-icon" style="background: rgba(251, 146, 60, 0.15); color: #fb923c;">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                    </svg>
+                </div>
+                <div class="feature-content">
+                    <div class="feature-title">File Upload</div>
+                    <div class="feature-desc">Attach images, docs & more</div>
+                </div>
+            </div>
+        </div>
 
         <!-- Start Button -->
         <button id="startChatBtn" class="tutorial-start-btn">
@@ -2940,94 +2982,23 @@ function speak(text) {
 /* =========================
    Main DOMContentLoaded wiring
    ========================= */
-// ============================================
-// INTRO & TUTORIAL FLOW - FIXED
-// ============================================
-
 document.addEventListener("DOMContentLoaded", function () {
   const introScreen = document.getElementById("introScreen");
   const mainApp = document.getElementById("mainApp");
   const tutorialPage = document.getElementById("tutorialPage");
-  
-  // Ensure tutorial is hidden initially
-  if (tutorialPage) {
-    tutorialPage.style.display = "none";
-    tutorialPage.style.opacity = "0";
-  }
-  
-  // Ensure main app is hidden initially
-  if (mainApp) {
-    mainApp.classList.remove("visible");
-  }
-
-  // Step 1: Hide intro after 3.5 seconds
-  setTimeout(() => {
-    if (introScreen) {
-      introScreen.classList.add("hidden");
-    }
-    
-    // Step 2: Show tutorial after intro fades
-    setTimeout(() => {
-      if (tutorialPage) {
-        tutorialPage.style.display = "flex";
-        
-        // Wait for display to apply, then fade in
-        setTimeout(() => {
-          tutorialPage.style.opacity = "1";
-          
-          // Step 3: Attach button events AFTER tutorial is visible
-          setupTutorialButtons();
-        }, 50);
-      }
-    }, 600); // Wait for intro to fade out
-  }, 3500); // Show intro for 3.5 seconds
-
-  // Tutorial button setup function
-  function setupTutorialButtons() {
-    const startBtn = document.getElementById("startChatBtn");
-    const skipBtn = document.getElementById("tutorialSkip");
-    
-    console.log("Setting up tutorial buttons...", { startBtn, skipBtn });
-    
-    if (startBtn) {
-      startBtn.onclick = function(e) {
-        e.preventDefault();
-        console.log("Start Chatting clicked!");
-        startMainApp();
-      };
-    }
-    
-    if (skipBtn) {
-      skipBtn.onclick = function(e) {
-        e.preventDefault();
-        console.log("Skip Tutorial clicked!");
-        startMainApp();
-      };
-    }
-  }
-  
-  // Function to transition to main app
-  function startMainApp() {
-    if (tutorialPage) {
-      tutorialPage.style.opacity = "0";
-      
-      setTimeout(() => {
-        tutorialPage.style.display = "none";
-        
-        if (mainApp) {
-          mainApp.classList.add("visible");
-          
-          // Add welcome message
-          setTimeout(() => {
-            addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-          }, 300);
-        }
-      }, 300);
-    }
-  }
-
-  // Continue with rest of your DOMContentLoaded code below...
-  // (Keep all the other code for chat, file upload, hamburger menu, etc.)
+  const startChatBtn = document.getElementById("startChatBtn");
+  const chat = document.getElementById("chat");
+  const header = document.querySelector(".header");
+  const input = document.getElementById("input");
+  const send = document.getElementById("send");
+  const file = document.getElementById("file");
+  const micButton = document.getElementById("micButton");
+  const fileButton = document.getElementById("fileButton");
+  const multiFunctionContainer = document.getElementById("multiFunctionContainer");
+  const composer = document.getElementById("composer");
+  const stagedFileChip = document.getElementById("stagedFileChip");
+  const stagedFileName = document.getElementById("stagedFileName");
+  const clearFileBtn = document.getElementById("clearFileBtn");
 
   // Hamburger menu elements
   const hamburgerMenu = document.getElementById("hamburgerMenu");
@@ -3057,38 +3028,23 @@ document.addEventListener("DOMContentLoaded", function () {
     // Always show tutorial page
     setTimeout(() => {
       tutorialPage.style.display = "flex";
-      setTimeout(() => { 
-        tutorialPage.style.opacity = "1"; 
-        
-        // ✅ FIXED - Attach button event AFTER tutorial is shown
-        const startBtn = document.getElementById("startChatBtn");
-        const skipBtn = document.getElementById("tutorialSkip");
-        
-        if (startBtn) {
-          startBtn.onclick = function() {
-            console.log("Start button clicked!"); // Debug log
-            tutorialPage.style.opacity = "0";
-            setTimeout(() => {
-              tutorialPage.style.display = "none";
-              mainApp.classList.add("visible");
-              addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-            }, 300);
-          };
-        }
-        
-        if (skipBtn) {
-          skipBtn.onclick = function() {
-            console.log("Skip button clicked!"); // Debug log
-            tutorialPage.style.opacity = "0";
-            setTimeout(() => {
-              tutorialPage.style.display = "none";
-              mainApp.classList.add("visible");
-            }, 300);
-          };
-        }
-      }, 50);
+      setTimeout(() => { tutorialPage.style.opacity = "1"; }, 50);
     }, 600);
   }, 3500);
+
+  // Start Chat Button (Tutorial)
+  if (startChatBtn) {
+    startChatBtn.onclick = function() {
+     
+      
+      tutorialPage.style.opacity = "0";
+      setTimeout(() => {
+        tutorialPage.style.display = "none";
+        mainApp.classList.add("visible");
+        addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+      }, 300);
+    };
+  }
 
   // Hamburger Menu Logic
   hamburgerMenu.addEventListener('click', () => {
@@ -3433,38 +3389,32 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentDemoMode = 'file'; // 'file' or 'mic'
 
         function switchDemoButton(mode) {
-    if (mode === 'mic') {
-        demoFileBtn.classList.remove('active');
-        demoMicBtn.classList.add('active');
-        
-        // When switched to MIC, show DOWN arrow to go back
-        demoInstruction.innerHTML = `
-            <div class="swipe-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <!-- DOWN ARROW -->
-                    <path d="M12 5v14M5 12l7 7 7-7"/>
-                </svg>
-            </div>
-            <span>Great! Now swipe DOWN to go back</span>
-        `;
-        currentDemoMode = 'mic';
-    } else {
-        demoMicBtn.classList.remove('active');
-        demoFileBtn.classList.add('active');
-        
-        // When back to FILE, show UP arrow again
-        demoInstruction.innerHTML = `
-            <div class="swipe-indicator">
-                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                    <!-- UP ARROW -->
-                    <path d="M12 19V5M5 12l7-7 7 7"/>
-                </svg>
-            </div>
-            <span>Perfect! Try swiping UP again</span>
-        `;
-        currentDemoMode = 'file';
-    }
-}
+            if (mode === 'mic') {
+                demoFileBtn.classList.remove('active');
+                demoMicBtn.classList.add('active');
+                demoInstruction.innerHTML = `
+                    <div class="swipe-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 19V5M5 12l7-7 7 7"/>
+                        </svg>
+                    </div>
+                    <span>Great! Now swipe DOWN to go back</span>
+                `;
+                currentDemoMode = 'mic';
+            } else {
+                demoMicBtn.classList.remove('active');
+                demoFileBtn.classList.add('active');
+                demoInstruction.innerHTML = `
+                    <div class="swipe-indicator">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M12 5v14M5 12l7 7 7-7"/>
+                        </svg>
+                    </div>
+                    <span>Perfect! Try swiping UP again</span>
+                `;
+                currentDemoMode = 'file';
+            }
+        }
 
         function handleDemoStart(e) {
             isDemoDragging = true;
@@ -3593,12 +3543,6 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
-
-
-
-
-
-
 
 
 
