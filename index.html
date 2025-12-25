@@ -898,14 +898,9 @@
     background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #0f172a 100%);
     z-index: 9999;
     display: none;
-    align-items: flex-start;
+    align-items: flex-start;  /* ❌ THIS IS THE PROBLEM */
     justify-content: center;
     padding: 20px;
-    opacity: 0;
-    transition: opacity 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    overflow-y: auto;
-    overflow-x: hidden;
-}
 
 .tutorial-container {
     background: rgba(12, 17, 27, 0.95);
@@ -915,9 +910,9 @@
     padding: 40px 30px;
     max-width: 480px;
     width: 95%;
+    max-height: 90vh;  /* ✅ ADD THIS */
+    overflow-y: auto;  /* ✅ ADD THIS */
     box-shadow: 0 25px 50px rgba(0, 0, 0, 0.8);
-    animation: tutorialSlideIn 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
-    position: relative;
 }
 
 @keyframes tutorialSlideIn {
@@ -956,7 +951,7 @@
 }
 
 .tutorial-subtitle {
-    color: rgba(255, 255, 255, 0.6);
+    color: rgba(255, 255, 255, 0.9);  /* ✅ FIXED - More visible */
     font-size: 14px;
     letter-spacing: 2px;
 }
@@ -1058,7 +1053,7 @@
     flex-direction: column;
     align-items: center;
     gap: 10px;
-    color: rgba(255, 255, 255, 0.7);
+    color: rgba(255, 255, 255, 1);
     font-size: 14px;
     font-weight: 600;
     text-align: center;
@@ -2971,23 +2966,38 @@ document.addEventListener("DOMContentLoaded", function () {
     // Always show tutorial page
     setTimeout(() => {
       tutorialPage.style.display = "flex";
-      setTimeout(() => { tutorialPage.style.opacity = "1"; }, 50);
+      setTimeout(() => { 
+        tutorialPage.style.opacity = "1"; 
+        
+        // ✅ FIXED - Attach button event AFTER tutorial is shown
+        const startBtn = document.getElementById("startChatBtn");
+        const skipBtn = document.getElementById("tutorialSkip");
+        
+        if (startBtn) {
+          startBtn.onclick = function() {
+            console.log("Start button clicked!"); // Debug log
+            tutorialPage.style.opacity = "0";
+            setTimeout(() => {
+              tutorialPage.style.display = "none";
+              mainApp.classList.add("visible");
+              addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+            }, 300);
+          };
+        }
+        
+        if (skipBtn) {
+          skipBtn.onclick = function() {
+            console.log("Skip button clicked!"); // Debug log
+            tutorialPage.style.opacity = "0";
+            setTimeout(() => {
+              tutorialPage.style.display = "none";
+              mainApp.classList.add("visible");
+            }, 300);
+          };
+        }
+      }, 50);
     }, 600);
   }, 3500);
-
-  // Start Chat Button (Tutorial)
-  if (startChatBtn) {
-    startChatBtn.onclick = function() {
-     
-      
-      tutorialPage.style.opacity = "0";
-      setTimeout(() => {
-        tutorialPage.style.display = "none";
-        mainApp.classList.add("visible");
-        addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
-      }, 300);
-    };
-  }
 
   // Hamburger Menu Logic
   hamburgerMenu.addEventListener('click', () => {
@@ -3492,6 +3502,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
