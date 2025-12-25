@@ -2990,13 +2990,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const tutorialSkip = document.getElementById("tutorialSkip");
   
   console.log("🚀 DOM Content Loaded");
-  console.log("Elements found:", {
-    intro: !!introScreen,
-    tutorial: !!tutorialPage,
-    mainApp: !!mainApp,
-    startBtn: !!startChatBtn,
-    skipBtn: !!tutorialSkip
-  });
 
   // ============================================
   // INTRO SCREEN LOGIC - FIXED
@@ -3005,39 +2998,26 @@ document.addEventListener("DOMContentLoaded", function () {
   console.log("🎬 Starting intro animation");
   
   setTimeout(() => {
-    console.log("⏰ 3.5s passed - hiding intro");
+    console.log("✅ Hiding intro screen");
     introScreen.classList.add("hidden");
     
-    // Wait for intro fade out, then show tutorial
+    // Wait for intro fade out animation (500ms from CSS)
     setTimeout(() => {
       console.log("📖 Showing tutorial page");
-      
-      // Show tutorial
       tutorialPage.style.display = "flex";
-      
-      // Force browser to recognize the display change
-      void tutorialPage.offsetWidth;
-      
-      // Fade in tutorial
-      setTimeout(() => {
-        tutorialPage.style.opacity = "1";
-        console.log("✅ Tutorial visible!");
-      }, 50);
-      
-    }, 600); // Wait for intro fade out (500ms) + small buffer
-    
-  }, 3500); // Show intro for 3.5 seconds
+      tutorialPage.style.opacity = "1";
+      console.log("✅ Tutorial page visible");
+    }, 500);
+  }, 3500);
 
   // ============================================
-  // START CHAT BUTTON
+  // START CHAT BUTTON - KEEP ONLY THIS ONE
   // ============================================
   
   if (startChatBtn) {
     console.log("✅ Start Chat button found");
-    startChatBtn.addEventListener('click', function() {
+    startChatBtn.onclick = function() {
       console.log("🚀 Start Chat clicked");
-      
-      // Hide tutorial
       tutorialPage.style.opacity = "0";
       
       setTimeout(() => {
@@ -3045,26 +3025,23 @@ document.addEventListener("DOMContentLoaded", function () {
         mainApp.classList.add("visible");
         console.log("✅ Main app visible");
         
-        // Add welcome message
         setTimeout(() => {
           addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
         }, 100);
       }, 300);
-    });
+    };
   } else {
     console.error("❌ Start Chat button NOT found!");
   }
 
   // ============================================
-  // SKIP TUTORIAL BUTTON
+  // SKIP TUTORIAL BUTTON - KEEP ONLY THIS ONE
   // ============================================
   
   if (tutorialSkip) {
     console.log("✅ Skip button found");
-    tutorialSkip.addEventListener('click', function() {
+    tutorialSkip.onclick = function() {
       console.log("⏭️ Skip clicked");
-      
-      // Hide tutorial
       tutorialPage.style.opacity = "0";
       
       setTimeout(() => {
@@ -3072,15 +3049,16 @@ document.addEventListener("DOMContentLoaded", function () {
         mainApp.classList.add("visible");
         console.log("✅ Main app visible (skipped)");
         
-        // Add welcome message
         setTimeout(() => {
           addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
         }, 100);
       }, 300);
-    });
+    };
   } else {
     console.error("❌ Skip button NOT found!");
   }
+
+  // ... rest of your code continues here (hamburger menu, etc.)
 
  
   // Hamburger menu elements
@@ -3611,6 +3589,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
