@@ -1876,87 +1876,72 @@ button:active {
         </div>
 
         <!-- Interactive Demo Section -->
-        <div class="tutorial-demo-section">
-            <div class="demo-label">TRY IT NOW</div>
-            <div class="interactive-demo">
-                <div class="demo-buttons-container" id="demoButtonsContainer">
-                    <button class="demo-file-btn active" id="demoFileBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                            <polyline points="14 2 14 8 20 8"></polyline>
-                        </svg>
-                    </button>
-                    <button class="demo-mic-btn" id="demoMicBtn">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
-                            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                            <line x1="12" y1="19" x2="12" y2="23"></line>
-                            <line x1="8" y1="23" x2="16" y2="23"></line>
-                        </svg>
-                    </button>
-                </div>
-                <div class="demo-instruction" id="demoInstruction">
-                    <div class="swipe-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 5v14M5 12l7 7 7-7"/>
-                        </svg>
-                    </div>
-                    <span>Swipe UP on the button</span>
-                </div>
-            </div>
+ <!-- Tutorial Demo Section with FIXED arrows -->
+<div class="tutorial-demo-section">
+    <div class="demo-label">TRY IT NOW</div>
+    <div class="interactive-demo">
+        <div class="demo-buttons-container" id="demoButtonsContainer">
+            <button class="demo-file-btn active" id="demoFileBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+            </button>
+            <button class="demo-mic-btn" id="demoMicBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+            </button>
         </div>
+        <div class="demo-instruction" id="demoInstruction">
+            <!-- INITIAL STATE: Show UP arrow -->
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <!-- UP ARROW -->
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </div>
+            <span>Swipe UP to switch to Voice</span>
+        </div>
+    </div>
+</div>
 
         <!-- Features List -->
-        <div class="tutorial-features">
-            <div class="tutorial-feature-item">
-    <div class="feature-icon" style="background: rgba(6, 182, 212, 0.15); color: #06b6d4;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 19V5M5 12l7-7 7 7"/>
-        </svg>
-    </div>
-    <div class="feature-content">
-        <div class="feature-title">Slide UP</div>
-        <div class="feature-desc">File button → Voice button</div>
-    </div>
-</div>
-
-           <div class="tutorial-feature-item">
-    <div class="feature-icon" style="background: rgba(168, 85, 247, 0.15); color: #a855f7;">
-        <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-            <path d="M12 5v14M5 12l7 7 7-7"/>
-        </svg>
-    </div>
-    <div class="feature-content">
-        <div class="feature-title">Slide DOWN</div>
-        <div class="feature-desc">Voice button → File button</div>
-    </div>
-</div>
-            <div class="tutorial-feature-item">
-                <div class="feature-icon" style="background: rgba(34, 197, 94, 0.15); color: #22c55e;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
-                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
-                    </svg>
-                </div>
-                <div class="feature-content">
-                    <div class="feature-title">Voice Input</div>
-                    <div class="feature-desc">Speak your questions naturally</div>
-                </div>
-            </div>
-
-            <div class="tutorial-feature-item">
-                <div class="feature-icon" style="background: rgba(251, 146, 60, 0.15); color: #fb923c;">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
-                        <polyline points="14 2 14 8 20 8"></polyline>
-                    </svg>
-                </div>
-                <div class="feature-content">
-                    <div class="feature-title">File Upload</div>
-                    <div class="feature-desc">Attach images, docs & more</div>
-                </div>
-            </div>
+      <!-- Tutorial Demo Section with FIXED arrows -->
+<div class="tutorial-demo-section">
+    <div class="demo-label">TRY IT NOW</div>
+    <div class="interactive-demo">
+        <div class="demo-buttons-container" id="demoButtonsContainer">
+            <button class="demo-file-btn active" id="demoFileBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                    <polyline points="14 2 14 8 20 8"></polyline>
+                </svg>
+            </button>
+            <button class="demo-mic-btn" id="demoMicBtn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 1 6 0V4a3 3 0 0 0-3-3z"></path>
+                    <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                    <line x1="12" y1="19" x2="12" y2="23"></line>
+                    <line x1="8" y1="23" x2="16" y2="23"></line>
+                </svg>
+            </button>
         </div>
+        <div class="demo-instruction" id="demoInstruction">
+            <!-- INITIAL STATE: Show UP arrow -->
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <!-- UP ARROW -->
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </div>
+            <span>Swipe UP to switch to Voice</span>
+        </div>
+    </div>
+</div>
 
         <!-- Start Button -->
         <button id="startChatBtn" class="tutorial-start-btn">
@@ -3389,32 +3374,38 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentDemoMode = 'file'; // 'file' or 'mic'
 
         function switchDemoButton(mode) {
-            if (mode === 'mic') {
-                demoFileBtn.classList.remove('active');
-                demoMicBtn.classList.add('active');
-                demoInstruction.innerHTML = `
-                    <div class="swipe-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 19V5M5 12l7-7 7 7"/>
-                        </svg>
-                    </div>
-                    <span>Great! Now swipe DOWN to go back</span>
-                `;
-                currentDemoMode = 'mic';
-            } else {
-                demoMicBtn.classList.remove('active');
-                demoFileBtn.classList.add('active');
-                demoInstruction.innerHTML = `
-                    <div class="swipe-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 5v14M5 12l7 7 7-7"/>
-                        </svg>
-                    </div>
-                    <span>Perfect! Try swiping UP again</span>
-                `;
-                currentDemoMode = 'file';
-            }
-        }
+    if (mode === 'mic') {
+        demoFileBtn.classList.remove('active');
+        demoMicBtn.classList.add('active');
+        
+        // When switched to MIC, show DOWN arrow to go back
+        demoInstruction.innerHTML = `
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <!-- DOWN ARROW -->
+                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+            </div>
+            <span>Great! Now swipe DOWN to go back</span>
+        `;
+        currentDemoMode = 'mic';
+    } else {
+        demoMicBtn.classList.remove('active');
+        demoFileBtn.classList.add('active');
+        
+        // When back to FILE, show UP arrow again
+        demoInstruction.innerHTML = `
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <!-- UP ARROW -->
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </div>
+            <span>Perfect! Try swiping UP again</span>
+        `;
+        currentDemoMode = 'file';
+    }
+}
 
         function handleDemoStart(e) {
             isDemoDragging = true;
@@ -3543,6 +3534,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
