@@ -3021,22 +3021,34 @@ document.addEventListener("DOMContentLoaded", function () {
   let userUsedVoice = false;
 
   
- /* Intro logic - Always show tutorial */
+/* Intro logic - Always show tutorial */
   setTimeout(() => {
     introScreen.classList.add("hidden");
     
     // Always show tutorial page
     setTimeout(() => {
       tutorialPage.style.display = "flex";
-      setTimeout(() => { tutorialPage.style.opacity = "1"; }, 50);
+      setTimeout(() => { 
+        tutorialPage.style.opacity = "1"; 
+      }, 50);
     }, 600);
   }, 3500);
 
   // Start Chat Button (Tutorial)
   if (startChatBtn) {
     startChatBtn.onclick = function() {
-     
-      
+      tutorialPage.style.opacity = "0";
+      setTimeout(() => {
+        tutorialPage.style.display = "none";
+        mainApp.classList.add("visible");
+        addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
+      }, 300);
+    };
+  }
+
+  // Tutorial Skip Button
+  if (tutorialSkip) {
+    tutorialSkip.onclick = function() {
       tutorialPage.style.opacity = "0";
       setTimeout(() => {
         tutorialPage.style.display = "none";
@@ -3500,6 +3512,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
