@@ -3022,40 +3022,54 @@ document.addEventListener("DOMContentLoaded", function () {
 
   
 /* Intro logic - Always show tutorial */
+  console.log("🎬 Intro started");
   setTimeout(() => {
+    console.log("✅ Hiding intro screen");
     introScreen.classList.add("hidden");
     
     // Always show tutorial page
     setTimeout(() => {
+      console.log("📖 Showing tutorial page");
       tutorialPage.style.display = "flex";
       setTimeout(() => { 
         tutorialPage.style.opacity = "1"; 
+        console.log("✅ Tutorial page visible");
       }, 50);
     }, 600);
   }, 3500);
 
-  // Start Chat Button (Tutorial)
+// Start Chat Button (Tutorial)
   if (startChatBtn) {
+    console.log("✅ Start Chat button found");
     startChatBtn.onclick = function() {
+      console.log("🚀 Start Chat clicked");
       tutorialPage.style.opacity = "0";
       setTimeout(() => {
         tutorialPage.style.display = "none";
         mainApp.classList.add("visible");
+        console.log("✅ Main app visible");
         addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
       }, 300);
     };
+  } else {
+    console.error("❌ Start Chat button NOT found!");
   }
 
   // Tutorial Skip Button
   if (tutorialSkip) {
+    console.log("✅ Skip button found");
     tutorialSkip.onclick = function() {
+      console.log("⏭️ Skip clicked");
       tutorialPage.style.opacity = "0";
       setTimeout(() => {
         tutorialPage.style.display = "none";
         mainApp.classList.add("visible");
+        console.log("✅ Main app visible (skipped)");
         addBubble("ai", "Hello! I'm YASH AI. How can I help you today?");
       }, 300);
     };
+  } else {
+    console.error("❌ Skip button NOT found!");
   }
 
   // Hamburger Menu Logic
@@ -3512,6 +3526,7 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
 
 
