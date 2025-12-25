@@ -1901,7 +1901,7 @@ button:active {
                             <path d="M12 5v14M5 12l7 7 7-7"/>
                         </svg>
                     </div>
-                    <span>Swipe UP or DOWN on the button</span>
+                    <span>Swipe UP on the button</span>
                 </div>
             </div>
         </div>
@@ -2528,7 +2528,7 @@ function addBubble(type, text, fileAttachment = null) {
   const textDiv = document.createElement("div");
   textDiv.className = "message-text";
   if (type === "ai" && text) {
-    textDiv.innerHTML = `<b>YASH AI: </b>${text}`;
+    textDiv.innerHTML = `<b>YASH AI:  </b>${text}`;
   } else {
     textDiv.textContent = text || "";
   }
@@ -3389,32 +3389,32 @@ document.addEventListener('DOMContentLoaded', function() {
         let currentDemoMode = 'file'; // 'file' or 'mic'
 
         function switchDemoButton(mode) {
-            if (mode === 'mic') {
-                demoFileBtn.classList.remove('active');
-                demoMicBtn.classList.add('active');
-                demoInstruction.innerHTML = `
-                    <div class="swipe-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 19V5M5 12l7-7 7 7"/>
-                        </svg>
-                    </div>
-                    <span>Great! Now swipe DOWN to go back</span>
-                `;
-                currentDemoMode = 'mic';
-            } else {
-                demoMicBtn.classList.remove('active');
-                demoFileBtn.classList.add('active');
-                demoInstruction.innerHTML = `
-                    <div class="swipe-indicator">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
-                            <path d="M12 5v14M5 12l7 7 7-7"/>
-                        </svg>
-                    </div>
-                    <span>Perfect! Try swiping UP again</span>
-                `;
-                currentDemoMode = 'file';
-            }
-        }
+    if (mode === 'mic') {
+        demoFileBtn.classList.remove('active');
+        demoMicBtn.classList.add('active');
+        demoInstruction.innerHTML = `
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 5v14M5 12l7 7 7-7"/>
+                </svg>
+            </div>
+            <span>Great! Now swipe DOWN to go back</span>
+        `;
+        currentDemoMode = 'mic';
+    } else {
+        demoMicBtn.classList.remove('active');
+        demoFileBtn.classList.add('active');
+        demoInstruction.innerHTML = `
+            <div class="swipe-indicator">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                    <path d="M12 19V5M5 12l7-7 7 7"/>
+                </svg>
+            </div>
+            <span>Perfect! Try swiping UP again</span>
+        `;
+        currentDemoMode = 'file';
+    }
+}
 
         function handleDemoStart(e) {
             isDemoDragging = true;
@@ -3543,4 +3543,5 @@ console.log('%c Made with ❤️ in India by Yash Dubey', 'color: #ff00ff; font-
 </body>
 
 </html>
+
 
